@@ -9,19 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star, GitFork, MessageSquare } from "lucide-react";
+import { repoCardProps } from "@/types/repo";
 
-interface RepositoryCardProps {
-  repo: {
-    id: number;
-    name: string;
-    description: string;
-    stargazers_count: number;
-    forks_count: number;
-    html_url: string;
-  };
-}
-
-export function RepositoryCard({ repo }: RepositoryCardProps) {
+export function RepositoryCard({ repo }: repoCardProps) {
   return (
     <Card className="w-full mb-4">
       <CardHeader>
