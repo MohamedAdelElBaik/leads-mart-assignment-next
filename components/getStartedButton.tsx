@@ -8,6 +8,7 @@ import Link from "next/link";
 
 export default function GetStartedButton() {
   const { data: session } = useSession();
+
   return (
     <>
       {session?.user?.email ? (

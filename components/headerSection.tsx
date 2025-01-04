@@ -2,7 +2,6 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import UserAvatar from "./userAvatar";
-import { useRouter } from "next/navigation";
 
 export default function HeaderSection() {
   const { data: session } = useSession();
@@ -21,11 +20,9 @@ export default function HeaderSection() {
 
 function UserLoggedIN() {
   const { data: session } = useSession();
-  const navigate = useRouter();
 
   function handleLogout() {
-    navigate.push("/");
-    signOut();
+    signOut({ callbackUrl: "/" });
   }
 
   return (
