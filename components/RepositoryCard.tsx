@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -10,8 +12,25 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star, GitFork, MessageSquare } from "lucide-react";
 import { repoCardProps } from "@/types/repo";
+import { useState } from "react";
 
 export function RepositoryCard({ repo }: repoCardProps) {
+  const storedComments = localStorage.getItem(`comments_${repo.id}`);
+
+  const [comment, setComment] = useState<string>("");
+  const [comments, setComments] = useState<string[]>(
+    storedComments ? JSON.parse(storedComments) : []
+  );
+
+  function handleAddComment() {
+    setComments((comments) => [...comments, comment]);
+    localStorage.setItem(
+      `comments_${repo.id}`,
+      JSON.stringify([...comments, comment])
+    );
+    setComment("");
+  }
+
   return (
     <Card className="w-full mb-4">
       <CardHeader>
@@ -40,10 +59,21 @@ export function RepositoryCard({ repo }: repoCardProps) {
       </CardContent>
       <CardFooter className="flex flex-col items-start">
         <h4 className="font-semibold mb-2">Comments</h4>
-        <p className="text-sm text-gray-600 mb-1">commit</p>
+        <ul className="text-sm text-gray-600 mb-1">
+          {comments.map((comment, idx) => (
+            <li key={idx} className="mb-1">
+              {comment}
+            </li>
+          ))}
+        </ul>
         <div className="w-full mt-2">
-          <Textarea placeholder="Add a comment..." className="mb-2" />
-          <Button className="w-full">
+          <Textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Add a comment..."
+            className="mb-2"
+          />
+          <Button onClick={handleAddComment} className="w-full">
             <MessageSquare className="w-4 h-4 mr-2" />
             Add Comment
           </Button>
