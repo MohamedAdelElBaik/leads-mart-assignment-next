@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitHub Repository Viewer
+
+This project is a GitHub Repository Viewer that allows you to view and interact with your public GitHub repositories.
+
+## Demo
+
+You can view a live demo of the project [https://leads-mart-assignment.vercel.app/](https://leads-mart-assignment.vercel.app/).
+
+## Technologies Used
+
+- Next
+- React
+- Tailwind CSS
+- Axios
+- NextAuth
+- Shadcn UI
+- Lucide React
 
 ## Getting Started
 
-First, run the development server:
+To run this project locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Clone the repository:**
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+   ```sh
+   git clone https://github.com/MohamedAdelElBaik/leads-mart-assignment-next.git
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Install dependencies:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```sh
+   npm install
+   ```
 
-## Learn More
+3. **Create a GitHub OAuth App:**
 
-To learn more about Next.js, take a look at the following resources:
+   - Go to [GitHub Developer Settings](https://github.com/settings/developers).
+   - Click on "New OAuth App".
+   - Set the "Authorization callback URL" to `http://localhost:3000/api/auth/callback/github`.
+   - Save the Client ID and Client Secret.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Set up environment variables:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   Create a file in the root of the project and add the following:
 
-## Deploy on Vercel
+   ```env
+   GITHUB_CLIENT_ID=your-github-client-id
+   GITHUB_CLIENT_SECRET=your-github-client-secret
+   NEXTAUTH_SECRET=your-nextauth-secret
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. **Run the development server:**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   ```sh
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Additional Information
+
+- This project uses NextAuth.js for authentication with GitHub.
+- The for NextAuth.js are defined in [app/api/auth/[...nextauth]/options.ts](app/api/auth/[...nextauth]/options.ts).
+- The main components for displaying repositories and user profiles are located in the directory.
