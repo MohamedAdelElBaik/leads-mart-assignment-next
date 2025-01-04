@@ -2,6 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import UserAvatar from "./userAvatar";
+import { useRouter } from "next/navigation";
 
 export default function HeaderSection() {
   const { data: session } = useSession();
@@ -9,7 +10,9 @@ export default function HeaderSection() {
   return (
     <header className="bg-gray-800 text-white py-4">
       <div className="container mx-auto px-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">GitHub Repository Viewer</h1>
+        <h1 className="text-lg md:text-2xl font-bold">
+          GitHub Repository Viewer
+        </h1>
         {session?.user?.email ? <UserLoggedIN /> : <UserLoggedOut />}
       </div>
     </header>
@@ -18,6 +21,12 @@ export default function HeaderSection() {
 
 function UserLoggedIN() {
   const { data: session } = useSession();
+  const navigate = useRouter();
+
+  function handleLogout() {
+    navigate.push("/");
+    signOut();
+  }
 
   return (
     <Popover>
@@ -31,7 +40,11 @@ function UserLoggedIN() {
             {session?.user?.email}
           </p>
           <div>
-            <Button onClick={() => signOut()} className="text-left mt-4">
+            <Button
+              variant="destructive"
+              onClick={handleLogout}
+              className="text-left mt-4"
+            >
               log out
             </Button>
           </div>

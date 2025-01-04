@@ -73,7 +73,7 @@ export function RepositoryCard({ repo }: repoCardProps) {
             placeholder="Add a comment..."
             className="mb-2"
           />
-          <Button onClick={handleAddComment} className="w-full">
+          <Button onClick={handleAddComment}>
             <MessageSquare className="w-4 h-4 mr-2" />
             Add Comment
           </Button>
