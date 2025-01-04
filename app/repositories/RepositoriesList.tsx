@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { RepositoryCard } from "@/components/RepositoryCard";
+import {
+  RepositoriesCardSkeleton,
+  RepositoryCard,
+} from "@/components/RepositoryCard";
 import { useRepositories } from "@/hooks/useRepositories";
 import { PaginationControls } from "@/components/paginationControls";
 import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function RepositoriesList() {
   const { repositories, error, status, session } = useRepositories();
@@ -26,7 +30,7 @@ export function RepositoriesList() {
   const totalPages = Math.ceil(filteredRepositories.length / reposPerPage);
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return <RepositoriesListSkeleton />;
   }
 
   if (status === "authenticated" && !session?.accessToken) {
@@ -35,6 +39,10 @@ export function RepositoriesList() {
 
   if (error) {
     return <div>{error}</div>;
+  }
+
+  if (!repositories.length) {
+    return <section>No repositories found.</section>;
   }
 
   return (
@@ -57,6 +65,25 @@ export function RepositoriesList() {
         onPrevious={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
         onNext={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
       />
+    </section>
+  );
+}
+
+function RepositoriesListSkeleton() {
+  return (
+    <section className="space-y-4 ">
+      <div>
+        <Skeleton className="w-full h-6" />
+      </div>
+      <div className="space-y-4">
+        <RepositoriesCardSkeleton />
+        <RepositoriesCardSkeleton />
+        <RepositoriesCardSkeleton />
+      </div>
+      <div className="flex gap-4 justify-center items-center">
+        <Skeleton className="w-40 h-10" />
+        <Skeleton className="w-40 h-10" />
+      </div>
     </section>
   );
 }

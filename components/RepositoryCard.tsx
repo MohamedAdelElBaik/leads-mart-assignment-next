@@ -13,6 +13,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Star, GitFork, MessageSquare } from "lucide-react";
 import { repoCardProps } from "@/types/repo";
 import { useState } from "react";
+import { Skeleton } from "./ui/skeleton";
+import Link from "next/link";
 
 export function RepositoryCard({ repo }: repoCardProps) {
   const storedComments = localStorage.getItem(`comments_${repo.id}`);
@@ -32,7 +34,7 @@ export function RepositoryCard({ repo }: repoCardProps) {
   }
 
   return (
-    <Card className="w-full mb-4">
+    <Card>
       <CardHeader>
         <CardTitle>{repo.name}</CardTitle>
         <CardDescription>{repo.description}</CardDescription>
@@ -48,17 +50,17 @@ export function RepositoryCard({ repo }: repoCardProps) {
             {repo.forks_count}
           </span>
         </div>
-        <a
+        <Link
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-500 hover:underline mt-2 inline-block"
         >
           View on GitHub
-        </a>
+        </Link>
       </CardContent>
       <CardFooter className="flex flex-col items-start">
-        <h4 className="font-semibold mb-2">Comments</h4>
+        <h4 className="font-semibold mb-1">Comments</h4>
         <ul className="text-sm text-gray-600 mb-1">
           {comments.map((comment, idx) => (
             <li key={idx} className="mb-1">
@@ -77,6 +79,28 @@ export function RepositoryCard({ repo }: repoCardProps) {
             <MessageSquare className="w-4 h-4 mr-2" />
             Add Comment
           </Button>
+        </div>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export function RepositoriesCardSkeleton() {
+  return (
+    <Card>
+      <CardHeader className="space-y-4">
+        <Skeleton className="w-[40%] h-7" />
+        <Skeleton className="w-[45%] h-7" />
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Skeleton className="w-full h-5" />
+        <Skeleton className="w-[60%] h-5" />
+        <Skeleton className="w-full h-5" />
+      </CardContent>
+      <CardFooter>
+        <div className="w-full space-y-4">
+          <Skeleton className="w-[80%] h-5" />
+          <Skeleton className="w-[90%] h-5" />
         </div>
       </CardFooter>
     </Card>
